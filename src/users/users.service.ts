@@ -18,7 +18,6 @@ export class UsersService {
   }
 
   async create(user: User) {
-    //console.log(user);
     user.CreateTime = user.UpdateTime = new Date(Date.now());
     this.usersRepository.save(user);
   }
