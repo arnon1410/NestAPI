@@ -1,27 +1,27 @@
 import { Injectable , NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EqParts } from './eq-parts.entity';
+import { Categorys } from './categorys.entity';
 
 @Injectable()
-export class EqPartsService {constructor(
-    @InjectRepository(EqParts) private problem: Repository<EqParts>,
+export class CategoryService {constructor(
+    @InjectRepository(Categorys) private problem: Repository<Categorys>,
   ) {}
 
-  async findAll(): Promise<EqParts[]> {
+  async findAll(): Promise<Categorys[]> {
     return await this.problem.find();
   }
 
-  findOne(id: number): Promise<EqParts> {
+  findOne(id: number): Promise<Categorys> {
     return this.problem.findOne(id);
   }
 
-  async create(problem: EqParts) {
+  async create(problem: Categorys) {
     problem.CreateTime = problem.UpdateTime = new Date(Date.now());
     this.problem.save(problem);
   }
 
-  async update(id: number, problem: EqParts): Promise<EqParts> {
+  async update(id: number, problem: Categorys): Promise<Categorys> {
     const editedProblem = await this.problem.findOne(id);
     if (!editedProblem) {
       throw new NotFoundException('Problem is not found');
@@ -33,8 +33,8 @@ export class EqPartsService {constructor(
   //editedUser.FNameE = user.FNameE;
  // editedUser.LNameE = user.LNameE;
  // editedUser.Sex = user.Sex;
-  editedProblem.EqPartName = problem.EqPartName;
-  editedProblem.IsActive = problem.IsActive;
+  editedProblem.SubjectName = problem.SubjectName;
+  //editedProblem.IsActive = problem.IsActive;
     //editedUser.Email = user.Email;
     //editedUser.Mobile = user.Mobile;
    // editedUser.LineID = user.LineID;

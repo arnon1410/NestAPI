@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete,} from '@nestjs/common';
-import { EqPartsService } from './eq-parts.service';
-import { EqParts } from './eq-parts.entity';
+import { SubjectService } from './subject.service';
+import { Subject } from './subject.entity';
 
-@Controller('eq-parts')
-export class EqPartsController {
-    constructor(private readonly eqpartService: EqPartsService) {}
+@Controller('subject')
+
+export class SubjectController {
+    constructor(private readonly eqpartService: SubjectService) {}
 
     @Get()
     findAll() {
@@ -17,12 +18,12 @@ export class EqPartsController {
     }
   
     @Post()
-    create(@Body() user: EqParts) {
+    create(@Body() user: Subject) {
       return this.eqpartService.create(user);
     }
   
     @Patch(':id')
-    async editNote(@Body() user: EqParts, @Param('id') id: number): Promise<EqParts> {
+    async editNote(@Body() user: Subject, @Param('id') id: number): Promise<Subject> {
       return await this.eqpartService.update(id, user);
     }
   

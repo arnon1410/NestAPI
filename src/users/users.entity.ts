@@ -1,57 +1,56 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { IsString, IsEmail } from 'class-validator';
 //import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from "class-validator";
+import * as bcrypt from 'bcrypt';
 
 export enum UserRole {
-  SystemAdmin = 'SystemAdmin',
   Admin = 'Admin',
-  Technician = 'Technician',
-  HeadOfTechnician = 'HeadOfTechnician',
-  General = 'General',
+  User = 'User',
 }
 
 @Entity()
 export class Users extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  UserID: number;
+  @PrimaryColumn()
+  StudentID: string;
 
-  @Column({ length: 50 })
+  @Column({ unique: true, length: 50 })
   @IsString()
   UserName: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 100 })
   @IsString()
   Password: string;
 
-  @Column({ length: 10 })
-  @IsString()
-  PrefixT: string;
 
   @Column({ length: 100 })
   @IsString()
-  FNameT: string;
+  Name: string;
+
 
   @Column({ length: 100 })
   @IsString()
-  LNameT: string;
+  Faculty: string;
 
-  @Column({ length: 10, nullable: true })
-  PrefixE: string;
-
-  @Column({ length: 100, nullable: true })
+  @Column({ length: 100 })
   @IsString()
-  FNameE: string;
+  Major: string;
 
-  @Column({ length: 100, nullable: true })
-  @IsString()
-  LNameE: string;
 
-  @Column({ length: 1 })
-  @IsString()
-  Sex: string;
-
-  @Column({ length: 100, nullable: true })
-  IDCard: string;
+  //@Column({ length: 1 })
+  //@IsString()
+  //Sex: string;
 
   @Column({ default: false })
   IsActive: boolean;
@@ -60,30 +59,38 @@ export class Users extends BaseEntity {
   @IsEmail()
   Email: string;
 
-  @Column({ length: 50, nullable: true })
-  Mobile: string;
-
-  @Column({ length: 50, nullable: true })
-  LineID: string;
-
   @Column({
     type: 'enum',
     enum: UserRole,
-    default: UserRole.General,
+    default: UserRole.User,
   })
   UserRole: UserRole;
+
+  @Column({ nullable: true })
+  ProfileImage: string;
 
   @Column({ length: 100 })
   @IsString()
   CreateBy: string;
 
-  @Column()
+  @CreateDateColumn()
   CreateTime: Date;
 
   @Column({ length: 100 })
   @IsString()
   UpdateBy: string;
 
-  @Column()
+  @UpdateDateColumn()
   UpdateTime: Date;
+
+  @BeforeInsert()
+  emailToLowerCase() {
+    this.Email = this.Email.toLowerCase();
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async hashPassword() {
+    this.Password = await bcrypt.hash(this.Password, 10);
+  }
 }
