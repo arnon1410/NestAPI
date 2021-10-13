@@ -47,7 +47,6 @@ export class UsersService {
 
     // compare passwords
     const areEqual = await comparePasswords(user.Password, Password);
-
     if (!areEqual)
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
       console.log(user);
@@ -99,7 +98,16 @@ export class UsersService {
     editedUser.Name = user.Name;
     editedUser.Email = user.Email;
     editedUser.UserName = user.UserName;
-    editedUser.Password = user.Password;
+    //compare password เช็คว่าเป็นรหัสเก่ามั้ย
+    //const areEqual = await comparePasswords(editedUser.Password, user.Password);
+    //console.log(areEqual);
+    //if (!areEqual){
+      //await bcrypt.hash(user.Password, 8,(err, res)=> {
+
+        //editedUser.Password = res;
+       // editedUser.save();
+     // })
+   //}
     editedUser.Name = user.Name;
     editedUser.Faculty = user.Faculty;
     editedUser.Major = user.Major;
@@ -110,6 +118,8 @@ export class UsersService {
 
     await editedUser.save();
     return editedUser;
+    
+    
   }
 
   async remove(id: number): Promise<void> {

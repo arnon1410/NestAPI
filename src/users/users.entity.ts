@@ -5,8 +5,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
@@ -14,6 +16,7 @@ import {
 import { IsString, IsEmail } from 'class-validator';
 //import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from "class-validator";
 import * as bcrypt from 'bcrypt';
+import { Grade } from 'src/grade/grade.entity';
 
 export enum UserRole {
   Admin = 'Admin',
@@ -72,7 +75,7 @@ export class Users extends BaseEntity {
   @Column({ length: 100 })
   @IsString()
   CreateBy: string;
-
+Q
   @CreateDateColumn()
   CreateTime: Date;
 
@@ -82,15 +85,29 @@ export class Users extends BaseEntity {
 
   @UpdateDateColumn()
   UpdateTime: Date;
-
+  encryptedPassword: string;
+//แปลง ให้เป็นพิมพ์เล้ก
   @BeforeInsert()
   emailToLowerCase() {
     this.Email = this.Email.toLowerCase();
   }
 
-  @BeforeInsert()
-  @BeforeUpdate()
-  async hashPassword() {
-    this.Password = await bcrypt.hash(this.Password, 10);
-  }
+  //แปลง ก่อนที่จะอัพเดท password
+  //@BeforeInsert()
+  //@BeforeUpdate()
+  //async hashPassword() {
+    //this.Password = await bcrypt.hash(this.Password, 8);
+  //}
+
+  @OneToMany(() => Grade, (grade) => grade.users, {
+    cascade: true,
+  })
+  grade: Grade;
+
+  @JoinColumn({
+    name: 'GradeID',
+    referencedColumnName: 'GradeID',
+
+  })
+  users: Users[];
 }
