@@ -4,7 +4,7 @@
     "port": 3306,
     "username": "root",
     "password": "",
-    "database": "test",
+    "database": "test2",
     "synchronize": true,
     "charset": "utf8",
     "collate": "utf8_unicode_ci",

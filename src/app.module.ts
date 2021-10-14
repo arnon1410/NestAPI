@@ -7,7 +7,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { GradeModule } from './grade/grade.module';
 import { GroupsubModule } from './GroupSub/groupsub.module';
-import { ActivityModule } from './Activity/activity.module';
 import { SubjectModule } from './Subject/subject.module'; 
 import { CourseModule } from './course/course.module';
 
@@ -19,7 +18,7 @@ import { CourseModule } from './course/course.module';
     AuthModule,
     GradeModule,
     GroupsubModule,
-    ActivityModule,
+
     SubjectModule,
     CourseModule
     

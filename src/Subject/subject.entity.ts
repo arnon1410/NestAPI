@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsString } from 'class-validator';
-import { Grade } from 'src/Grade/grade.entity';
+import { Grade } from 'src/grade/grade.entity';
 
 @Entity()
 export class Subject extends BaseEntity {
@@ -29,8 +29,13 @@ export class Subject extends BaseEntity {
   @IsString()
   Credit: string;
 
+// เชื่อมกับ grade
   @OneToMany(() => Grade, (grade) => grade.subject, {
     cascade: true,
+  })
+  @JoinColumn({
+    name: 'GradeID',
+    referencedColumnName: 'GradeID',
   })
   grade: Grade;
 
@@ -41,15 +46,6 @@ export class Subject extends BaseEntity {
   @JoinColumn({
     name: 'SubjectID',
     referencedColumnName: 'SubjectID',
-    /* name: 'name_group',
-    joinColumn: {
-      name: 'SubjectID',
-      referencedColumnName: 'SubjectID',
-    },
-    inverseJoinColumn: {
-      name: 'SubjectID',
-      referencedColumnName: 'SubjectID',
-    }, */
   })
   groupsub: Groupsub[];
 }

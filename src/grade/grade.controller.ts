@@ -8,11 +8,38 @@ import {
     Delete,
     Res,
   } from '@nestjs/common';
-  import {Response, Request} from 'express';
-  import {JwtService} from "@nestjs/jwt";
   import { GradeService } from './grade.service';
   import { Grade } from './grade.entity';
-  import { Observable, of } from 'rxjs';
 
-@Controller('grade')
-export class GradeController {}
+  @Controller('grade')
+  export class GradeController {
+    constructor(private readonly gradeService: GradeService) {}
+  
+    @Get()
+    findAll() {
+      return this.gradeService.findAll();
+    }
+  
+    @Get(':id')
+    findOne(@Param('id') id: number) {
+      return this.gradeService.findOne(id);
+    }
+  
+    @Post()
+    create(@Body() user: Grade) {
+      return this.gradeService.create(user);
+    }
+  
+    @Patch(':id')
+    async editNote(
+      @Body() user: Grade,
+      @Param('id') id: number,
+    ): Promise<Grade> {
+      return await this.gradeService.update(id, user);
+    }
+  
+    @Delete(':id')
+    remove(@Param('id') id: number) {
+      this.gradeService.remove(id);
+    }
+  }

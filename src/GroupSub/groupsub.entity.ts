@@ -25,15 +25,6 @@ export class Groupsub extends BaseEntity {
   @OneToMany(() => Subject, (subject) => subject.groupsub, {
     cascade: true,
   })
-  groupsub: Groupsub[];
 
-  @OneToMany(() => Subject, (subject) => subject.groupsub, {
-    onDelete: 'CASCADE',
-    orphanedRowAction: 'delete',
-  })
-  @JoinColumn({
-    name: 'SubjectID',
-    referencedColumnName: 'SubjectID',
-  })
   subject: Subject[];
 }

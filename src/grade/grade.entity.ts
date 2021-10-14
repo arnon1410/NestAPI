@@ -15,6 +15,7 @@ import {
   } from 'typeorm';
   import { IsString, IsEmail } from 'class-validator';
 import { Users } from 'src/users/users.entity';
+import { Subject } from 'src/Subject/subject.entity';
   //import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from "class-validator";
   @Entity()
   export class Grade extends BaseEntity {
@@ -22,16 +23,13 @@ import { Users } from 'src/users/users.entity';
     GradeID: string;
   
     @Column({ unique: true, length: 50 })
-    @IsString()
     Grade: string;
   
     @Column({ length: 50 })
-    @IsString()
     Term: string;
   
   
     @Column({ length: 50 })
-    @IsString()
     Year: string;
   
     @Column({ length: 100 })
@@ -45,7 +43,7 @@ import { Users } from 'src/users/users.entity';
     @IsString()
     UpdateBy: string;
 
-    @ManyToOne(() => Users, (users) => users.users, {
+    @ManyToOne(() => Users, (users) => users.grade, {
       onDelete: 'CASCADE',
       orphanedRowAction: 'delete',
     })
@@ -54,6 +52,16 @@ import { Users } from 'src/users/users.entity';
       referencedColumnName: 'StudentID',
     })
     users: Users[];
+
+    @ManyToOne(() => Subject, (subject) => subject.grade, {
+      onDelete: 'CASCADE',
+      orphanedRowAction: 'delete',
+    })
+    @JoinColumn({
+      name: 'SubjectID',
+      referencedColumnName: 'SubjectID',
+    })
+    subject: Subject[];
 
   
   }
