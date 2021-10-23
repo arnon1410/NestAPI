@@ -1,8 +1,10 @@
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { NameGroup } from 'src/GroupSub/groupsub.entity';
 import { Repository } from 'typeorm';
 import { Subject } from './subject.entity';
+
 
 @Injectable()
 export class SubjectService {
@@ -22,6 +24,7 @@ export class SubjectService {
   }
 
   async create(subject: Subject) {
+    subject.NameGroup = NameGroup.Ax1;
     this.subjectRepository.save(subject);
   }
 

@@ -2,11 +2,13 @@ import { Groupsub } from './../GroupSub/groupsub.entity';
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { IsString } from 'class-validator';
 import { Grade } from 'src/grade/grade.entity';
@@ -28,6 +30,20 @@ export class Subject extends BaseEntity {
   @Column({ length: 100 })
   @IsString()
   Credit: string;
+
+  @Column({ length: 100 })
+  @IsString()
+  CreateBy: string;
+
+  @CreateDateColumn()
+  CreateTime: Date;
+
+  @Column({ length: 100 })
+  @IsString()
+  UpdateBy: string;
+
+  @UpdateDateColumn()
+  UpdateTime: Date;
 
 // เชื่อมกับ grade
   @OneToMany(() => Grade, (grade) => grade.subject, {

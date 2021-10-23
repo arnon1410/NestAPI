@@ -75,7 +75,7 @@ export class Users extends BaseEntity {
   @Column({ length: 100 })
   @IsString()
   CreateBy: string;
-Q
+
   @CreateDateColumn()
   CreateTime: Date;
 
