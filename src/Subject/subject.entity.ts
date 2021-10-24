@@ -60,8 +60,8 @@ export class Subject extends BaseEntity {
     orphanedRowAction: 'delete',
   })
   @JoinColumn({
-    name: 'SubjectID',
-    referencedColumnName: 'SubjectID',
+    name: 'GroupID',
+    referencedColumnName: 'GroupID',
   })
   groupsub: Groupsub[];
 }

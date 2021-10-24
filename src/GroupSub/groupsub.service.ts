@@ -28,8 +28,11 @@ export class GroupsubService {
     if (!editedUser) {
       throw new NotFoundException('User is not found');
     }
-    /*editedUser.PrefixT = user.;
-    editedUser.UpdateTime = new Date(Date.now());*/
+      editedUser.GroupID = user.GroupID;
+      editedUser.NameGroup = user.NameGroup;
+      editedUser.TotalCredit = user.TotalCredit;
+      editedUser.UpdateBy = user.UpdateBy;
+      /*editedUser.UpdateTime = new Date(Date.now());*/
 
     await editedUser.save();
     return editedUser;
