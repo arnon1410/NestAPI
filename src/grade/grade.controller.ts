@@ -31,11 +31,11 @@ import {
     }
   
     @Patch(':id')
-    async editNote(
-      @Body() user: Grade,
+    async editGrade(
+      @Body() grade: Grade,
       @Param('id') id: number,
     ): Promise<Grade> {
-      return await this.gradeService.update(id, user);
+      return await this.gradeService.update(id, grade);
     }
   
     @Delete(':id')

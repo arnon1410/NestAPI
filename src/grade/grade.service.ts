@@ -7,41 +7,38 @@ import { Grade } from './grade.entity';
 export class GradeService {
   constructor(
     @InjectRepository(Grade)
-    private subjectRepository: Repository<Grade>,
+    private gradeRepo: Repository<Grade>,
   ) {}
 
   async findAll(): Promise<Grade[]> {
-    return await this.subjectRepository.find({
-      relations: ['users'],
+    return await this.gradeRepo.find({
+      relations: ['users', 'subject'],
     });
   }
 
   findOne(id: number): Promise<Grade> {
-    return this.subjectRepository.findOne(id);
+    return this.gradeRepo.findOne(id);
   }
 
-  async create(subject: Grade) {
-    this.subjectRepository.save(subject);
+  async create(grade: Grade) {
+    this.gradeRepo.save(grade);
   }
 
-  async update(id: number, subject: Grade): Promise<Grade> {
-    const editedSubject = await this.subjectRepository.findOne(id);
-    if (!editedSubject) {
-      throw new NotFoundException('User is not found');
+  async update(id: number, grade: Grade): Promise<Grade> {
+    const edited = await this.gradeRepo.findOne(id);
+    if (!edited) {
+      throw new NotFoundException('Grade is not found');
     }
-    editedSubject.GradeID = subject.GradeID;
-    editedSubject.Grade = subject.Grade;
-    editedSubject.Term = subject.Term;
-    editedSubject.Year = subject.Year;
-    editedSubject.CreateBy = subject.CreateBy;
-    editedSubject.CreateTime = subject.CreateTime;
-    editedSubject.UpdateBy = subject.UpdateBy;
+    edited.Grade = grade.Grade;
+    edited.Term = grade.Term;
+    edited.Year = grade.Year;
+    edited.UpdateBy = grade.UpdateBy;
 
-    await editedSubject.save();
-    return editedSubject;
+    await edited.save();
+    return edited;
   }
 
   async remove(id: number): Promise<void> {
-    await this.subjectRepository.delete(id);
+    await this.gradeRepo.delete(id);
   }
 }

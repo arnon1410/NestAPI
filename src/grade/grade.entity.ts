@@ -1,36 +1,30 @@
 import {
     BaseEntity,
-    BeforeInsert,
-    BeforeUpdate,
     Column,
     CreateDateColumn,
     Entity,
     JoinColumn,
-    JoinTable,
-    ManyToMany,
     ManyToOne,
-    OneToMany,
-    PrimaryColumn,
+    PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from 'typeorm';
-  import { IsString, IsEmail } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Users } from 'src/users/users.entity';
 import { Subject } from 'src/Subject/subject.entity';
-  //import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from "class-validator";
-  @Entity()
+
+@Entity()
   export class Grade extends BaseEntity {
-    @PrimaryColumn()
-    GradeID: string;
+    @PrimaryGeneratedColumn()
+    GradeID: number;
   
-    @Column({ unique: true, length: 50 })
+    @Column({ length: 100 })
     Grade: string;
   
-    @Column({ length: 50 })
-    Term: string;
+    @Column()
+    Term: number;
   
-  
-    @Column({ length: 50 })
-    Year: string;
+    @Column()
+    Year: number;
   
     @Column({ length: 100 })
     @IsString()
@@ -42,6 +36,9 @@ import { Subject } from 'src/Subject/subject.entity';
     @Column({ length: 100 })
     @IsString()
     UpdateBy: string;
+
+    @UpdateDateColumn()
+    UpdateTime: Date;
 
     @ManyToOne(() => Users, (users) => users.grade, {
       onDelete: 'CASCADE',
@@ -62,6 +59,4 @@ import { Subject } from 'src/Subject/subject.entity';
       referencedColumnName: 'SubjectID',
     })
     subject: Subject[];
-
-  
   }
