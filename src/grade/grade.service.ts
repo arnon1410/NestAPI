@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { getManager, Repository } from 'typeorm';
 import { Grade } from './grade.entity';
 
 @Injectable()
@@ -15,6 +15,25 @@ export class GradeService {
       relations: ['users', 'subject'],
     });
   }
+
+  async findByUserID(studentID: number): Promise<Grade[]> {
+    const sql: any = getManager()
+      .createQueryBuilder()
+      .select('g.*')
+      .addSelect('s.*')
+      .from('grade', 'g')
+      .innerJoin('subject', 's', 's.SubjectID = g.SubjectID')
+      //.innerJoin('users', 'u', 'u..StudentID = g.StudentID')
+      .where('g.StudentID = :studentID', {studentID: studentID})
+      .orderBy('Term, Year');
+    const results = await sql.getRawMany();
+    return results;
+    // return await this.gradeRepo.find({
+    //   relations: ['users', 'subject'],
+    //   where: { StudentID: studentID },
+    // });
+  }
+
 
   findOne(id: number): Promise<Grade> {
     return this.gradeRepo.findOne(id);

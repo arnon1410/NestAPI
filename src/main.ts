@@ -13,7 +13,7 @@ async function bootstrap() {
   const PORT = 3001;
   await app.listen(PORT);
   console.log(`Server is running on port ${PORT}.`);
-  console.log(process.env.SECRETKEY);
+  //console.log(process.env.SECRETKEY);
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());

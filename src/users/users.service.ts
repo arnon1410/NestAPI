@@ -24,7 +24,7 @@ export class UsersService {
 
   async findAll(): Promise<Users[]> {
     return await this.userRepo.find({
-      relations: ['grade'],
+      relations: ['grade','activity'],
     });
   }
 

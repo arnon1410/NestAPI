@@ -20,6 +20,11 @@ import {
       return this.gradeService.findAll();
     }
   
+    @Get('ByUserID/:id')
+    findByUserID(@Param('id') UserID: number) {
+      return this.gradeService.findByUserID(UserID);
+    }
+    
     @Get(':id')
     findOne(@Param('id') id: number) {
       return this.gradeService.findOne(id);

@@ -9,6 +9,7 @@ import { GradeModule } from './grade/grade.module';
 import { GroupsubModule } from './GroupSub/groupsub.module';
 import { SubjectModule } from './Subject/subject.module'; 
 import { CourseModule } from './course/course.module';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { CourseModule } from './course/course.module';
     GroupsubModule,
 
     SubjectModule,
-    CourseModule
+    CourseModule,
+    ActivityModule
     
   ],
   controllers: [AppController],

@@ -17,6 +17,7 @@ import { IsString, IsEmail } from 'class-validator';
 //import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from "class-validator";
 import * as bcrypt from 'bcrypt';
 import { Grade } from 'src/grade/grade.entity';
+import { Activity } from 'src/activity/activity.entity';
 
 export enum UserRole {
   Admin = 'Admin',
@@ -107,6 +108,16 @@ export class Users extends BaseEntity {
   @JoinColumn({
     name: 'GradeID',
     referencedColumnName: 'GradeID',
+
+  })
+  @OneToMany(() => Activity, (activity) => activity.users, {
+    cascade: true,
+  })
+  activity: Activity;
+
+  @JoinColumn({
+    name: 'ActivityID',
+    referencedColumnName: 'ActivityID',
 
   })
   users: Users[];
